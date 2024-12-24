@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2hd6s1hcwo1c"]
+
+[ext_resource type="Script" path="res://PlayerShip.cs" id="1_42e7a"]
+[ext_resource type="PackedScene" uid="uid://tw3v780cx5eb" path="res://art/Spaceship.glb" id="2_i7x6t"]
+[ext_resource type="Script" path="res://PlayerCamera.cs" id="3_67alx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gusbj"]
+radius = 0.3
+height = 2.5
+
+[node name="PlayerShip" type="CharacterBody3D"]
+script = ExtResource("1_42e7a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.970166, 0.3531)
+shape = SubResource("CapsuleShape3D_gusbj")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Spaceship" parent="Pivot" instance=ExtResource("2_i7x6t")]
+transform = Transform3D(-0.0048, 0, 4.19629e-10, 0, 0.0048, 0, -4.19629e-10, 0, -0.0048, 0, 0, 0.400182)
+
+[node name="CameraPivot" type="Marker3D" parent="Pivot"]
+transform = Transform3D(-1, -1.06693e-08, -8.67693e-08, -1.3192e-08, 0.999576, 0.029125, 8.64217e-08, 0.029125, -0.999576, 0, 0.108493, 0.668988)
+
+[node name="PlayerCamera" type="Camera3D" parent="Pivot/CameraPivot"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.642, -2.05)
+fov = 90.0
+script = ExtResource("3_67alx")
+BoostFOV = 100
+BrakeFOV = 80
+FOVTweenTime = 0.3

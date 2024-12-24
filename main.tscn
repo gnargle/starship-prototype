@@ -1,0 +1,48 @@
+[gd_scene load_steps=10 format=3 uid="uid://bqs610xo3cfk"]
+
+[ext_resource type="Script" path="res://Main.cs" id="1_5268j"]
+[ext_resource type="Texture2D" uid="uid://bafmmqf250lwr" path="res://art/NightSkyHDRI001_2K-HDR.exr" id="2_bh18y"]
+[ext_resource type="PackedScene" uid="uid://b2hd6s1hcwo1c" path="res://player_ship.tscn" id="3_jy4fs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ohnpk"]
+size = Vector3(500, 2, 500)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0wcxq"]
+albedo_color = Color(0.0283969, 0.00122149, 0.0624298, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4ihd4"]
+material = SubResource("StandardMaterial3D_0wcxq")
+size = Vector3(500, 2, 500)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4p1r7"]
+panorama = ExtResource("2_bh18y")
+
+[sub_resource type="Sky" id="Sky_0lqho"]
+sky_material = SubResource("PanoramaSkyMaterial_4p1r7")
+
+[sub_resource type="Environment" id="Environment_orf32"]
+background_mode = 2
+sky = SubResource("Sky_0lqho")
+sky_rotation = Vector3(0, -4.47153, 0)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_5268j")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ohnpk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_4ihd4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 37, 0)
+light_energy = 1.305
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_orf32")
+
+[node name="PlayerShip" parent="." instance=ExtResource("3_jy4fs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
