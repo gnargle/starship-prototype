@@ -16,6 +16,8 @@ public partial class PlayerShip : CharacterBody3D
 	[Export]
 	public float BrakeMultiplier { get; set; } = 0.5f;
 
+	public float TweenedYVal { get; set; } = 0;
+	private bool _tweeningY = false;
 	private Node3D Pivot;
 	private PlayerCamera Camera;
 
@@ -77,7 +79,18 @@ public partial class PlayerShip : CharacterBody3D
 
 		var rotDeg = Pivot.RotationDegrees;
 		rotDeg.Y -= inputDir.X * GetTurnMultiplier();
-		rotDeg.X -= inputDir.Y;
+		if (inputDir.Y != 0)
+		{
+			rotDeg.X -= inputDir.Y;
+		}
+		else if (_tweeningY)
+		{
+			rotDeg.X = TweenedYVal;
+			if (TweenedYVal == 0)
+			{
+				_tweeningY = false;
+			}
+		}
 		if (rotDeg.X > MAX_Y_DEGREES)
 		{
 			rotDeg.X = MAX_Y_DEGREES;
@@ -87,6 +100,14 @@ public partial class PlayerShip : CharacterBody3D
 			rotDeg.X = -MAX_Y_DEGREES;
 		}
 		Pivot.RotationDegrees = rotDeg;
+
+		if (Input.IsActionJustReleased("aim_up") || Input.IsActionJustReleased("aim_down"))
+		{
+			//tween rotation of X axis back to zero, like the stick is returning to neutral, to level out flight.
+			CreateTween().TweenProperty(this, "TweenedYVal", 0, 0.2f).From(rotDeg.X);
+			_tweeningY = true;
+		}
+
 		GD.Print($"Y degrees: {rotDeg.X}");
 	}
 
