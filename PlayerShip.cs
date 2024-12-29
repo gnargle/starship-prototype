@@ -20,6 +20,8 @@ public partial class PlayerShip : CharacterBody3D
 	private PlayerCamera Camera;
 
 	private Vector3 _targetVelocity = Vector3.Zero;
+
+	private const int MAX_Y_DEGREES = 25;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -76,7 +78,16 @@ public partial class PlayerShip : CharacterBody3D
 		var rotDeg = Pivot.RotationDegrees;
 		rotDeg.Y -= inputDir.X * GetTurnMultiplier();
 		rotDeg.X -= inputDir.Y;
+		if (rotDeg.X > MAX_Y_DEGREES)
+		{
+			rotDeg.X = MAX_Y_DEGREES;
+		}
+		else if (rotDeg.X < -MAX_Y_DEGREES)
+		{
+			rotDeg.X = -MAX_Y_DEGREES;
+		}
 		Pivot.RotationDegrees = rotDeg;
+		GD.Print($"Y degrees: {rotDeg.X}");
 	}
 
 	public override void _PhysicsProcess(double delta)
