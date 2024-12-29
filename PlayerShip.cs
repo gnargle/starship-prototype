@@ -107,8 +107,6 @@ public partial class PlayerShip : CharacterBody3D
 			CreateTween().TweenProperty(this, "TweenedYVal", 0, 0.2f).From(rotDeg.X);
 			_tweeningY = true;
 		}
-
-		GD.Print($"Y degrees: {rotDeg.X}");
 	}
 
 	public override void _PhysicsProcess(double delta)
