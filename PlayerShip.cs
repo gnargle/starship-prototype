@@ -4,6 +4,9 @@ using System;
 
 public partial class PlayerShip : CharacterBody3D
 {
+
+	[Export]
+	public PackedScene LaserScene { get; set; }
 	[Export]
 	public bool InvertControls = true;
 
@@ -45,6 +48,12 @@ public partial class PlayerShip : CharacterBody3D
 		if (Input.IsActionJustPressed("brake_fire"))
 		{
 			Camera.SetFOVBrake();
+		}
+		if (Input.IsActionJustPressed("laser_fire"))
+		{
+			var laser = LaserScene.Instantiate<Laser>();
+			laser.Initialize(Pivot.Basis, Pivot.Position);
+			AddChild(laser);
 		}
 	}
 

@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://kcp3ux5568gi"]
+
+[ext_resource type="Script" path="res://Laser.cs" id="1_f6yds"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_scq3v"]
+albedo_color = Color(0.176234, 0.749327, 0.90051, 1)
+emission_enabled = true
+emission = Color(0.157882, 0.789555, 0.831803, 1)
+emission_energy_multiplier = 5.23
+refraction_scale = 0.34
+disable_receive_shadows = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_c0r31"]
+material = SubResource("StandardMaterial3D_scq3v")
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oq5bs"]
+radius = 0.260615
+height = 3.48098
+
+[node name="Laser" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_f6yds")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.32, 0, 0, 0, -6.99382e-08, 0.32, 0, -1.6, -1.39876e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_c0r31")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_oq5bs")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="OnLaserTimerTimeout"]
