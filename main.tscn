@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqs610xo3cfk"]
+[gd_scene load_steps=11 format=3 uid="uid://bqs610xo3cfk"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_5268j"]
 [ext_resource type="Texture2D" uid="uid://bafmmqf250lwr" path="res://art/NightSkyHDRI001_2K-HDR.exr" id="2_bh18y"]
 [ext_resource type="PackedScene" uid="uid://b2hd6s1hcwo1c" path="res://player_ship.tscn" id="3_jy4fs"]
+[ext_resource type="PackedScene" uid="uid://kcp3ux5568gi" path="res://laser.tscn" id="4_85uah"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ohnpk"]
 size = Vector3(500, 2, 500)
@@ -46,3 +47,4 @@ environment = SubResource("Environment_orf32")
 
 [node name="PlayerShip" parent="." instance=ExtResource("3_jy4fs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+LaserScene = ExtResource("4_85uah")

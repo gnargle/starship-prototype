@@ -21,7 +21,8 @@ public partial class PlayerShip : CharacterBody3D
 
 	public float TweenedYVal { get; set; } = 0;
 	private bool _tweeningY = false;
-	private Node3D Pivot;
+	private bool _leftLaser = false;
+	private Node3D Pivot, LaserPointLeft, LaserPointRight;
 	private PlayerCamera Camera;
 
 	private Vector3 _targetVelocity = Vector3.Zero;
@@ -52,7 +53,10 @@ public partial class PlayerShip : CharacterBody3D
 		if (Input.IsActionJustPressed("laser_fire"))
 		{
 			var laser = LaserScene.Instantiate<Laser>();
-			laser.Initialize(Pivot.Basis, Pivot.Position);
+			var pos = Pivot.Position;
+			pos.Z -= 0.5f; // this isn't right and leads to the laser phasing through the ship
+						   //but i don't want to work it out rn.
+			laser.Initialize(Pivot.Basis, pos);
 			AddChild(laser);
 		}
 	}
