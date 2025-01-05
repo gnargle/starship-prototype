@@ -17,6 +17,7 @@ public partial class Laser : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		Velocity = this.Basis * Vector3.Forward * Speed;
 		MoveAndSlide();
 	}
 
@@ -24,8 +25,6 @@ public partial class Laser : CharacterBody3D
 	{
 		this.Position = playerPosition;
 		this.Basis = basis;
-
-		Velocity = this.Basis * Vector3.Forward * Speed;
 	}
 
 	private void OnLaserTimerTimeout()

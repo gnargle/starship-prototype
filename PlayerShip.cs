@@ -117,7 +117,7 @@ public partial class PlayerShip : CharacterBody3D
 		if (Input.IsActionJustReleased("aim_up") || Input.IsActionJustReleased("aim_down"))
 		{
 			//tween rotation of X axis back to zero, like the stick is returning to neutral, to level out flight.
-			CreateTween().TweenProperty(this, "TweenedYVal", 0, 0.2f).From(rotDeg.X);
+			CreateTween().TweenProperty(this, "TweenedYVal", 0, 0.2f).From(rotDeg.X).SetTrans(Tween.TransitionType.Sine);
 			_tweeningY = true;
 		}
 	}
